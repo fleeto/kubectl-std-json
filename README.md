@@ -1,6 +1,6 @@
 # kubectl-std-json
 
-Export Kubernetes object in JSON format with a clean and sorted style. Remove some auto generated fields and then sort fields in it
+Export Kubernetes object in JSON format with a clean and sorted style. Remove some auto generated fields and then sort fields in it.
 
 ## Installation
 
