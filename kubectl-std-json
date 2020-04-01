@@ -1,0 +1,25 @@
+#!/bin/sh
+
+METADATA=".metadata.resourceVersion, .metadata.selfLink, .metadata.managedFields, .metadata.generation, .metadata.uid, .metadata.creationTimestamp"
+STATUS=".status"
+ANNOTATION=".metadata.annotations.\"kubectl.kubernetes.io/last-applied-configuration\", .metadata.annotations.\"deployment.kubernetes.io/revision\""
+SPEC=".spec.template.metadata.creationTimestamp, .spec.revisionHistoryLimit, .spec.templateGeneration"
+
+if ! [ -x "$(command -v jq)" ]; then
+  echo 'Error: jq is not installed.' >&2
+  exit 1
+fi
+
+if [ $# -lt 2 ]
+  then
+    echo "Usage: $0 [workload-type] [object-name] [other parameters for kubectl]"
+    echo "Workload types: 'deployment', 'daemonset', 'configmap', 'statefulset', 'secret'"
+    echo "Example: $0 deploy coredns -n kube-system"
+    exit 1
+fi
+
+TYPE=$1
+NAME=$2
+OTHER=$*
+
+kubectl get ${OTHER} -ojson | jq -S "del(${METADATA}, ${STATUS}, ${ANNOTATION}, ${SPEC})"
