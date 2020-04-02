@@ -1,9 +1,9 @@
 #!/bin/sh
+METADATA=${JSON_METADATA-".metadata.resourceVersion, .metadata.selfLink, .metadata.managedFields, .metadata.generation, .metadata.uid, .metadata.creationTimestamp"}
 
-METADATA=".metadata.resourceVersion, .metadata.selfLink, .metadata.managedFields, .metadata.generation, .metadata.uid, .metadata.creationTimestamp"
-STATUS=".status"
-ANNOTATION=".metadata.annotations.\"kubectl.kubernetes.io/last-applied-configuration\", .metadata.annotations.\"deployment.kubernetes.io/revision\""
-SPEC=".spec.template.metadata.creationTimestamp, .spec.revisionHistoryLimit, .spec.templateGeneration"
+STATUS=${JSON_STATUS-".status"}
+ANNOTATION=${JSON_ANNOTATION-".metadata.annotations.\"kubectl.kubernetes.io/last-applied-configuration\", .metadata.annotations.\"deployment.kubernetes.io/revision\""}
+SPEC=${JSON_SPEC-".spec.template.metadata.creationTimestamp, .spec.revisionHistoryLimit, .spec.templateGeneration"}
 
 if ! [ -x "$(command -v jq)" ]; then
   echo 'Error: jq is not installed.' >&2

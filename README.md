@@ -10,6 +10,15 @@ Export Kubernetes object in JSON format with a clean and sorted style. Remove so
 
 `kubectl-std-json [resource type] [resource name] [kubectl options]`
 
+### Environment varibales
+
+|Name|Default|Note|
+|---|---|---|
+|JSON_METADATA|`".metadata.resourceVersion, .metadata.selfLink, .metadata.managedFields, .metadata.generation, .metadata.uid, .metadata.creationTimestamp"`|Fields to remove in `metadata`.|
+|JSON_STATUS|`".status"`|Fields to remove in `status`.|
+|JSON_ANNOTATION|`".metadata.annotations.\"kubectl.kubernetes.io/last-applied-configuration\", .metadata.annotations.\"deployment.kubernetes.io/revision\""`|Fields to remove in `annotation`.|
+|JSON_SPEC|`".spec.template.metadata.creationTimestamp, .spec.revisionHistoryLimit, .spec.templateGeneration"`|Fields to remove in `spec`.|
+
 ## Example
 
 ~~~shell
@@ -32,3 +41,7 @@ $ kubectl std-json secret grafana
   "type": "Opaque"
 }
 ~~~
+
+## Warning
+
+It can't deal with object list at this moment.
